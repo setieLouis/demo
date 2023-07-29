@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: demo
   labels:
-    app: demo
+    app: medeo
 spec:
   replicas: 2
   selector:
