@@ -15,5 +15,5 @@ spec:
         app: nginx
     spec:
       containers:
-        - name: demo
+        - name: demo2
           image: louisadjams/demo4:latest
