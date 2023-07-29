@@ -91,9 +91,9 @@ public class SimpleServer
         }
     }
 
-    public static void main (String args[])
+   /* public static void main (String args[])
     {
         SimpleServer ss = new SimpleServer(7777);
         ss.runServer();
-    }
+    }*/
 }

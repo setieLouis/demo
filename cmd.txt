@@ -1,0 +1,5 @@
+container run --name demo4 -d -p 127.0.0.1:9000:9000 demo4:latest
+//push -- do login Travor
+
+
+ocker push louisadjams/demo4:latest
