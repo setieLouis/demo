@@ -30,4 +30,10 @@ public class Ciao {
 
         return demo2Cleint.doCall();
     }
+
+    @GetMapping("/mao")
+    public String mao(){
+
+        return "ciao";
+    }
 }
