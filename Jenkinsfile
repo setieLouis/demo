@@ -21,7 +21,7 @@ pipeline {
         stage('tag') {
             steps {
 
-
+                echo "tag"
             }
         }
     }
