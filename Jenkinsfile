@@ -10,11 +10,23 @@ pipeline {
                 sh "gradle --version"
                 sh "gradle build"
             }
-
-            steps {
-
-                echo 'Hello World'
-            }
         }
     }
+
+   stages {
+       stage('test') {
+           steps {
+               echo "jacoco test coverage"
+           }
+       }
+   }
+
+    stages {
+          stage('tag') {
+              steps {
+                  echo "create tag"
+              }
+          }
+      }
+
 }
