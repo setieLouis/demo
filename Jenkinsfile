@@ -11,22 +11,18 @@ pipeline {
                 sh "gradle build"
             }
         }
-    }
 
-   stages {
-       stage('test') {
+        stage('test') {
            steps {
                echo "jacoco test coverage"
            }
-       }
-   }
+        }
 
-    stages {
-          stage('tag') {
-              steps {
-                  echo "create tag"
-              }
-          }
-      }
+        stage('tag') {
+            steps {
+                echo "create tag"
+            }
+        }
+    }
 
 }
