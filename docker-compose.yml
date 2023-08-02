@@ -5,7 +5,7 @@ services:
     labels:
       kompose.service.type: nodeport
     ports:
-      - '8080:8080'
+      - '8222:8080'
       - '443:8443'
       - '50000:50000'
     volumes:
