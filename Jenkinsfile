@@ -21,9 +21,11 @@ pipeline {
         stage('tag') {
             steps {
 
-            String ersion_value =  sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
+            version_value =  sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
             sh "echo Project in version value: $version_value"
-
+            version = version_value.split(/=/)[1]
+            sh "echo final version: $version"
+                echo "create tag"
             }
         }
     }
