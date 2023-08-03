@@ -34,6 +34,6 @@ public class Ciao {
     @PostMapping("/github-webhook/")
     public String mao(@RequestBody() Object object){
 
-        return "mao";
+        return "A";
     }
 }
