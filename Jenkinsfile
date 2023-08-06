@@ -38,7 +38,7 @@ pipeline {
 
                     def tag = "${list[0]}.${list[1]}.${last + 1}"
 
-                    //create tag
+                    sh "git tag -a \"$tag\" -m \"tag $tag was created by jenkins\""
 
 
 
@@ -51,7 +51,7 @@ pipeline {
 
 
                 withCredentials([string(credentialsId: '97d324fb-39c4-4f69-bf85-1c13ac2baafe', variable: 'TOKEN')]){
-                    //sh "git tag -a \"0.1.3\" -m \"some value\""
+
                     //sh "git branch"
                     //sh "git log"
                     sh 'git push  https://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@github.com/setieLouis/demo.git --tags'
