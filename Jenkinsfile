@@ -1,52 +1,94 @@
+def BUILD_VERSION
+
 pipeline {
     agent any
-    tools{
-        gradle "7.6.2"
+    environment {
+        ENVIRONMENT = "${GIT_BRANCH.replaceAll("origin/", "")}"
+        IMAGE_NAME = "annotations-api-service"
+        ECR_ENDPOINT = "837848150749.dkr.ecr.eu-west-1.amazonaws.com"
+    }
+
+    options {
+        skipStagesAfterUnstable()
     }
 
     stages {
-        stage('build') {
+
+        stage('Clone repository') {
             steps {
-                sh "gradle --version"
-                sh "gradle build"
-            }
-        }
-
-        stage('test') {
-           steps {
-               echo "jacoco test coverage"
-           }
-        }
-
-        stage('ciao'){
-            steps{
-                 script {
-                            def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version'").trim()
-                            def version = version_value.split(/=/)[1]
-                            def value = sh(returnStdout: true, script: "echo $version | grep -o \"0.0.[0-9]\"")
-                            def list = value.split(/\./)
-                            sh "echo la lista ${list}"
-                            def last = list[2] as int
-                            def tag = "${list[0]}.${list[1]}.${last + 1}"
-                            sh "echo \"questo è il $tag\""
-                            sh "sed -i 's/version = [^,]*/${tag}/g' build.gradle"
-                            sh "git commit -m 'increment version'"
-                            sh "git tag -a 0.0.16 -m \"tag $tag was created by jenkins\""
-                 }
-
-
-            }
-
-        }
-
-         stage('sendTag') {
-            steps {
-                withCredentials([string(credentialsId: '97d324fb-39c4-4f69-bf85-1c13ac2baafe', variable: 'TOKEN')]){
-                    sh 'git push  https://$TOKEN@github.com/setieLouis/demo.git --tags'
+                script {
+                    checkout scm
+                    echo 'Cloned version $version'
                 }
-
             }
         }
-    }
 
+        stage('Build') {
+            steps {
+                script {
+                    BUILD_VERSION = sh(
+                            script: /cat version.sbt | cut -d '"' -f2/,
+                            returnStdout: true
+                    ).trim()
+                    echo "Compiling ${BUILD_VERSION}..."
+                    sh "/home/ubuntu/sbt/bin/sbt docker:publishLocal"
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "No test configured"
+            }
+        }
+
+        stage('Push') {
+            steps {
+                script {
+
+                    CURRENT_IMAGE_VERSION = env.ECR_ENDPOINT + "/" + env.IMAGE_NAME + "-" + env.ENVIRONMENT + ":${BUILD_VERSION}"
+                     echo "current image version"
+                    echo CURRENT_IMAGE_VERSION
+
+                    LATEST_IMAGE_VERSION = env.ECR_ENDPOINT + "/" + env.IMAGE_NAME + "-" + env.ENVIRONMENT + ":latest"
+
+                    IMAGE_NAME_VERSION = env.IMAGE_NAME + ":${BUILD_VERSION}"
+
+                    echo "image version"
+                    echo IMAGE_NAME_VERSION
+
+                    sh("aws ecr get-login-password --region eu-west-1 \
+                    | docker login \
+                        --username AWS \
+                        --password-stdin ${ECR_ENDPOINT}")
+
+                    echo "Tagging versions ${IMAGE_NAME}-${ENVIRONMENT}..."
+                    sh("docker tag ${IMAGE_NAME_VERSION} ${CURRENT_IMAGE_VERSION}")
+                    sh("docker tag ${IMAGE_NAME_VERSION} ${LATEST_IMAGE_VERSION}")
+
+                    echo "Pushing versions ${BUILD_VERSION} and latest..."
+                    sh("docker push ${CURRENT_IMAGE_VERSION}")
+                    sh("docker push ${LATEST_IMAGE_VERSION}")
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+
+                sh("sed 's/latest/${BUILD_VERSION}/' ./kubernetes/${ENVIRONMENT}/deployment.yaml > ./kubernetes/${ENVIRONMENT}/tmp_deployement.yaml")
+                sh("cat ./kubernetes/${ENVIRONMENT}/tmp_deployement.yaml")
+
+
+                sh("kubectl config use-context ml_engine_service_account@next-bme-engine-${ENVIRONMENT}.eu-west-1.eksctl.io")
+                sh("kubectl apply -f kubernetes/${ENVIRONMENT}/service.yaml")
+                sh("kubectl apply -f kubernetes/${ENVIRONMENT}/tmp_deployement.yaml")
+                echo "Deploying ${IMAGE_NAME}"
+
+                echo "delete tmp_deployement"
+                sh("rm kubernetes/${ENVIRONMENT}/tmp_deployement.yaml")
+            }
+        }
+
+    }
 }
