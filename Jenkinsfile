@@ -37,7 +37,7 @@ pipeline {
 
                                                         def tag = "${list[0]}.${list[1]}.${last + 1}"
 
-                                                        sh "git tag -a 0.0.10 -m \"tag $tag was created by jenkins\""
+                                                        sh "git tag -a 0.0.11 -m \"tag $tag was created by jenkins\""
                  }
 
 
@@ -62,7 +62,7 @@ pipeline {
 
                     //sh "git branch"
                     //sh "git log"
-                    sh 'git push  https://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@github.com/setieLouis/demo.git --tags'
+                    sh 'git push  https://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@github.com/setieLouis/demo.git --tags'
                 }
 
             }
