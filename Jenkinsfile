@@ -28,10 +28,10 @@ pipeline {
 
                                                         def value = sh(returnStdout: true, script: "echo $version | grep -o 0.0.1")
 
-                                                        sh  "echo ${value}"
-                                                        def list = value.split(/\./)
-                                                        def last = list[2] as int
-                                                        sh "echo ${list[2]}"
+//                                                         sh  "echo ${value}"
+//                                                         def list = value.split(/\./)
+//                                                         def last = list[2] as int
+//                                                         sh "echo ${list[2]}"
                  }
 
 
