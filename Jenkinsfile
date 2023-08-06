@@ -20,7 +20,7 @@ pipeline {
 
         stage('ciao'){
             steps{
-                 script {
+                 script {}
 
 //                                     def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
 //                                     sh "echo Project in version value: $version_value"
@@ -47,7 +47,7 @@ pipeline {
                 //                     sh "git push origin --tags"
                 //
                 //                       sh "echo ciao mamma come va"
-                                }
+//                                }
 
             }
 
