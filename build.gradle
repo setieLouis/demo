@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.ping'
-version = '0.0.3-SNAPSHOT'
+version = '0.0.16-SNAPSHOT'
 
 java {
 	sourceCompatibility = '8'
