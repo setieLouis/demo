@@ -17,7 +17,7 @@ pipeline {
                echo "jacoco test coverage"
            }
         }
-        stage('create tag') {
+        stage('createTag') {
                 script {
 
                                 def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
@@ -47,7 +47,7 @@ pipeline {
             //                       sh "echo ciao mamma come va"
                             }
         }
-        stage('send tag') {
+        stage('sendTag') {
             steps {
 
 
