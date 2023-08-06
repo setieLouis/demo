@@ -23,6 +23,7 @@ pipeline {
                  script {
                             def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -e 'version ='").trim()
                             def version = version_value.split(/=/)[1]
+                            sh "echo \"questa è la version ${version}\""
                             def value = sh(returnStdout: true, script: "echo $version | grep -o \"0.0.[0-9]\"")
                             def list = value.split(/\./)
                             sh "echo la lista ${list}"
