@@ -18,7 +18,7 @@ pipeline {
            }
         }
 
-        stage('sendTag') {
+        stage('tag') {
             steps {
 
 
