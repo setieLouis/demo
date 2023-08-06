@@ -22,9 +22,9 @@ pipeline {
             steps{
                  script {
                                                         def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
-//                                                         sh "echo Project in version value: $version_value"
-//                                                         def version = version_value.split(/=/)[1]
-//                                                         sh "echo final version: $version"
+                                                        sh "echo Project in version value: $version_value"
+                                                        def version = version_value.split(/=/)[1]
+                                                        sh "echo final version: $version"
 //
 //                                                         def value = sh(returnStdout: true, script: "echo $version | grep -o 0.0.1")
 
