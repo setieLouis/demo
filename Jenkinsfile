@@ -38,7 +38,7 @@ pipeline {
 
                                     def tag = "${list[0]}.${list[1]}.${last + 1}"
 
-                                    sh "git tag -a \"$tag\" -m \"tag $tag was created by jenkins\""
+                                    sh "git tag -a 0.0.6 -m \"tag $tag was created by jenkins\""
 
 
 
