@@ -62,7 +62,7 @@ pipeline {
 
                     //sh "git branch"
                     //sh "git log"
-                    sh 'git push  https://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@github.com/setieLouis/demo.git --tags'
+                    sh 'git push  https://$TOKEN@github.com/setieLouis/demo.git --tags'
                 }
 
             }
