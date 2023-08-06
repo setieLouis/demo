@@ -27,7 +27,7 @@ pipeline {
                             def list = value.split(/\./)
                             def last = list[2] as int
                             def tag = "${list[0]}.${list[1]}.${last + 1}"
-                            sh "echo $tag"
+                            sh "echo \"questo è il $tag\""
                             sh "sed -i 's/version = [^,]*/${tag}/g' build.gradle"
                             sh "git commit -m 'increment version'"
                             sh "git tag -a 0.0.16 -m \"tag $tag was created by jenkins\""
