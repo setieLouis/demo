@@ -25,6 +25,8 @@ pipeline {
                             def version = version_value.split(/=/)[1]
                             sh "echo \"questa è la version ${version}\""
                             def value = sh(returnStdout: true, script: "echo $version | grep -o \"0.0.[0-9]\"")
+                            sh "echo \"questa è la version ${value}\""
+
                             def list = value.split(/\./)
                             sh "echo la lista ${list}"
                             def last = list[2] as int
