@@ -31,15 +31,17 @@ pipeline {
                                                         def list = value.split(/\./)
                                                         def last = list[2] as int
                                                         sh "echo ${list[2]}"
+
+
+                                                        sh "echo ${list[0]}.${list[1]}.${last + 1}"
+
+                                                        def tag = "${list[0]}.${list[1]}.${last + 1}"
+
+                                                        sh "git tag -a 0.0.6 -m \"tag $tag was created by jenkins\""
                  }
 
 
-//
-//                                     sh "echo ${list[0]}.${list[1]}.${last + 1}"
-//
-//                                     def tag = "${list[0]}.${list[1]}.${last + 1}"
 
-                                    //sh "git tag -a 0.0.6 -m \"tag $tag was created by jenkins\""
 
 
 
