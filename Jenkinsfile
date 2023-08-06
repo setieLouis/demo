@@ -21,16 +21,16 @@ pipeline {
         stage('ciao'){
             steps{
                  script {
-                                                        def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
-                                                        def version = version_value.split(/=/)[1]
-                                                        def value = sh(returnStdout: true, script: "echo $version | grep -o \"0.0.[0-9]\"")
-                                                        def list = value.split(/\./)
-                                                        def last = list[2] as int
-                                                        def tag = "${list[0]}.${list[1]}.${last + 1}"
-
-                                                        sh "sed -i 's/version = [^,]*/${tag}/g' build.gradle"
-                                                        sh "git commit -m 'increment version'"
-                                                        sh "git tag -a 0.0.16 -m \"tag $tag was created by jenkins\""
+                            def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
+                            def version = version_value.split(/=/)[1]
+                            def value = sh(returnStdout: true, script: "echo $version | grep -o \"0.0.[0-9]\"")
+                            def list = value.split(/\./)
+                            def last = list[2] as int
+                            def tag = "${list[0]}.${list[1]}.${last + 1}"
+                            sh "echo $tag"
+                            sh "sed -i 's/version = [^,]*/${tag}/g' build.gradle"
+                            sh "git commit -m 'increment version'"
+                            sh "git tag -a 0.0.16 -m \"tag $tag was created by jenkins\""
                  }
 
 
