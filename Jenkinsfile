@@ -53,7 +53,7 @@ pipeline {
 
         }
 
-        stage('tag') {
+        stage('maf') {
             steps {
                 withCredentials([string(credentialsId: '97d324fb-39c4-4f69-bf85-1c13ac2baafe', variable: 'TOKEN')]){
 
