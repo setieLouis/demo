@@ -21,7 +21,7 @@ pipeline {
         stage('ciao'){
             steps{
                  script {
-                            def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
+                            def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version'").trim()
                             def version = version_value.split(/=/)[1]
                             def value = sh(returnStdout: true, script: "echo $version | grep -o \"0.0.[0-9]\"")
                             def list = value.split(/\./)
