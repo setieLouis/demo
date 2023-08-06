@@ -25,10 +25,9 @@ pipeline {
                                                         sh "echo Project in version value: $version_value"
                                                         def version = version_value.split(/=/)[1]
                                                         sh "echo final version: $version"
-//
-//                                                         def value = sh(returnStdout: true, script: "echo $version | grep -o 0.0.1")
 
-//                                                         sh  "echo ${value}"
+                                                        def value = sh(returnStdout: true, script: "echo $version | grep -o 0.0.1")
+                                                        sh  "echo ${value}"
 //                                                         def list = value.split(/\./)
 //                                                         def last = list[2] as int
 //                                                         sh "echo ${list[2]}"
