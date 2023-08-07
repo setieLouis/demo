@@ -21,18 +21,19 @@ pipeline {
         stage('ciao'){
             steps{
                  script {
-                            def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -e 'version ='").trim()
+                            sh "ls ."
+                            def version_value = sh(returnStdout: true, script: "cat ./build.gradle | grep -e 'version ='").trim()
                             def version = version_value.split(/=/)[1]
                             sh "echo \"questa è la version ${version}\""
                             def value = sh(returnStdout: true, script: "echo $version | grep -o -E  \"[0-9]+.[0-9]+.[0-9]+\"")
                             sh "echo \"questa è la version ${value}\""
 
                             def list = value.split(/\./)
-                            sh "echo la lista ${list}"
+
                             def last = list[2] as int
                             def tag = "${list[0]}.${list[1]}.${last + 1}"
                             sh "echo \"questo è il $tag\""
-                            sh "sed -i 's/version = [^,]*/${tag}/g' build.gradle"
+                            sh "sed -i 's/version = [^,]*/ciao/g' ./build.gradle"
                             sh "git commit -m 'increment version'"
                             sh "git tag -a 0.0.16 -m \"tag $tag was created by jenkins\""
                  }
