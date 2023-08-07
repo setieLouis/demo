@@ -36,6 +36,9 @@ pipeline {
                             sh "sed -i 's/version = [^,]*/version = '\${tag}\'/g' ./build.gradle"
                             sh "git commit -am 'increment version'"
                             sh "git tag -a ${tag} -m \"tag $tag was created by jenkins\""
+                            sh 'git status'
+
+
                  }
 
 
