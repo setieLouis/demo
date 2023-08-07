@@ -46,7 +46,7 @@ pipeline {
          stage('sendTag') {
             steps {
                 withCredentials([string(credentialsId: '97d324fb-39c4-4f69-bf85-1c13ac2baafe', variable: 'TOKEN')]){
-
+                    sh 'git status'
                     sh 'git push --repo https://$TOKEN@github.com/setieLouis/demo.git --all'
                 }
 
