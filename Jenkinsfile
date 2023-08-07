@@ -46,8 +46,8 @@ pipeline {
          stage('sendTag') {
             steps {
                 withCredentials([string(credentialsId: '97d324fb-39c4-4f69-bf85-1c13ac2baafe', variable: 'TOKEN')]){
-                      sh "git push --all origin"
-                    //sh 'git push --all  https://$TOKEN@github.com/setieLouis/demo.git origin api --tags'
+
+                    sh 'git push origin api  https://$TOKEN@github.com/setieLouis/demo.git --tags'
                 }
 
             }
