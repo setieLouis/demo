@@ -33,7 +33,7 @@ pipeline {
                             def last = list[2] as int
                             def tag = "${list[0]}.${list[1]}.${last + 1}"
                             sh "echo \"questo è il $tag\""
-                            sh "sed -i 's/version = [^,]*/${tag}/g' ./build.gradle"
+                            sh "sed -i 's/version = [^,]*/version = '\${tag}\'/g' ./build.gradle"
                             sh "git commit -am 'increment version'"
                             sh "git tag -a ${tag} -m \"tag $tag was created by jenkins\""
                  }
@@ -46,7 +46,7 @@ pipeline {
          stage('sendTag') {
             steps {
                 withCredentials([string(credentialsId: '97d324fb-39c4-4f69-bf85-1c13ac2baafe', variable: 'TOKEN')]){
-                    sh 'git push  https://$TOKEN@github.com/setieLouis/demo.git --tags'
+                    sh 'git push --all  https://$TOKEN@github.com/setieLouis/demo.git origin api --tags'
                 }
 
             }
